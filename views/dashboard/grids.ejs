@@ -1,0 +1,61 @@
+<% if (user.role === 'superadmin') { %>
+   <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+      <div class="rounded-2xl flex flex-row text-center items-center justify-between border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+         <div class="flex h-12 w-12 justify-center items-center rounded-xl bg-gray-100 dark:bg-rose-800">
+            <i class="fa-solid fa-users fa-lg text-gray-800 dark:text-gray-100"></i>
+         </div>
+         <div class="flex justify-between items-end flex-col">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Total Pengguna</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+               <%= usersLength.toLocaleString('id-ID') %>
+            </h4>
+         </div>
+      </div>
+      <div class="rounded-2xl flex flex-row text-center items-center justify-between border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+         <div class="flex h-12 w-12 justify-center items-center rounded-xl bg-gray-100 dark:bg-rose-800">
+            <i class="fa-solid fa-cart-shopping fa-lg text-gray-800 dark:text-gray-100"></i>
+         </div>
+         <div class="flex justify-between items-end flex-col">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Orders</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+               <%= Number('3782211').toLocaleString('id-ID') %>
+            </h4>
+         </div>
+      </div>
+   </div>
+   <div class="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+      <div class="rounded-2xl flex flex-row text-center items-center justify-between border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+         <div class="flex h-12 w-12 justify-center items-center rounded-xl bg-gray-100 dark:bg-rose-800">
+            <i class="fa-solid fa-building-columns fa-lg text-gray-800 dark:text-gray-100"></i>
+         </div>
+         <div class="flex justify-between items-end flex-col">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Total Soal SMK</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+               <%= Number('10').toLocaleString('id-ID') %>
+            </h4>
+         </div>
+      </div>
+      <div class="rounded-2xl flex flex-row text-center items-center justify-between border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+         <div class="flex h-12 w-12 justify-center items-center rounded-xl bg-gray-100 dark:bg-rose-800">
+            <i class="fa-solid fa-building-columns fa-lg text-gray-800 dark:text-gray-100"></i>
+         </div>
+         <div class="flex justify-between items-end flex-col">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Total Soal SMP</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+               <%= Number('10').toLocaleString('id-ID') %>
+            </h4>
+         </div>
+      </div>
+      <div class="rounded-2xl flex flex-row text-center items-center justify-between border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+         <div class="flex h-12 w-12 justify-center items-center rounded-xl bg-gray-100 dark:bg-rose-800">
+            <i class="fa-solid fa-building-columns fa-lg text-gray-800 dark:text-gray-100"></i>
+         </div>
+         <div class="flex justify-between items-end flex-col">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Total Soal SD</span>
+            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+               <%= Number('10').toLocaleString('id-ID') %>
+            </h4>
+         </div>
+      </div>
+   </div>
+<% } %>

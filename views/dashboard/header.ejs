@@ -1,0 +1,134 @@
+<header x-data="{ menuToggle: false }" class="sticky top-0 flex w-full bg-white border-gray-200 z-[99999] dark:border-gray-800 dark:bg-gray-950 md:border-b">
+  <div class="flex flex-col items-center justify-between flex-grow md:flex-row md:px-6">
+    <div class="flex items-center justify-between w-full gap-2 px-3 py-3 border-b border-gray-200 dark:border-gray-800 sm:gap-4 md:justify-normal md:border-b-0 md:px-0 md:py-4">
+      <button :class="sidebarToggle ? 'md:bg-transparent dark:md:bg-transparent bg-gray-100 dark:bg-gray-800' : ''" class="flex items-center justify-center px-3 py-5 text-gray-500 border-gray-200 rounded-lg z-[99999] dark:border-gray-800 dark:text-gray-400 md:border" @click.stop="sidebarToggle = !sidebarToggle">
+        <i class="fa-solid fa-bars-staggered fa-lg hidden md:block"></i>
+        <i :class="sidebarToggle ? 'hidden' : 'block md:hidden'" class="fa-solid fa-bars-staggered fa-lg md:hidden"></i>
+        <i :class="sidebarToggle ? 'block md:hidden' : 'hidden'" class="fa-solid fa-xmark fa-lg"></i>
+      </button>
+
+      <a href="<%= baseUrl %>" class="md:hidden flex items-center justify-center">
+        <img class="w-[70%] h-10" src="<%= base_url %>/images/logo/tryout-online.svg" alt="Logo" />
+      </a>
+
+      <button class="flex items-center justify-center w-10 h-10 px-3 text-gray-700 rounded-lg z-99999 dark:text-gray-400 dark:hover:bg-gray-800 block md:hidden" :class="menuToggle ? 'bg-gray-100 dark:bg-gray-800' : ''" @click.stop="menuToggle = !menuToggle">
+        <i class="fa-solid fa-ellipsis fa-lg"></i>
+      </button>
+
+      <div class="hidden md:block">
+        <form action="https://formbold.com/s/unique_form_id" method="POST">
+          <div class="relative">
+            <button class="absolute -translate-y-1/2 left-4 top-1/2">
+              <i class="fa-solid fa-magnifying-glass fa-lg text-gray-500 dark:text-gray-400"></i>
+            </button>
+            <input type="text" placeholder="Cari atau ketik perintah..." class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-none focus:ring focus:ring-brand-500/10 dark:border-gray-800 dark:bg-gray-900 dark:bg-white/[0.03] dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 xl:w-[430px]" />
+
+            <button class="absolute right-2.5 top-1/2 inline-flex -translate-y-1/2 items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-[7px] py-[4.5px] text-xs -tracking-[0.2px] text-gray-500 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-400">
+              <span> ⌘ K </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div :class="menuToggle ? 'flex' : 'hidden'" class="items-center justify-between w-full gap-4 px-5 py-4 shadow-md md:flex md:justify-end md:px-0 md:shadow-none">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button class="relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white" @click.prevent="darkMode = !darkMode">
+          <i class="fa-solid fa-sun fa-lg hidden dark:block"></i>
+          <i class="fa-solid fa-moon fa-lg dark:hidden"></i>
+        </button>
+        <div class="relative" x-data="{ dropdownOpen: false, notifying: true }" @click.outside="dropdownOpen = false">
+          <button class="relative flex items-center justify-center text-gray-500 transition-colors bg-white border border-gray-200 rounded-full hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white" @click.prevent="dropdownOpen = !dropdownOpen; notifying = false">
+            <span :class="!notifying ? 'hidden' : 'flex'" class="absolute right-0 top-0.5 z-1 h-2 w-2 rounded-full bg-green-400">
+              <span class="absolute inline-flex w-full h-full bg-green-400 rounded-full opacity-75 -z-1 animate-ping"></span>
+            </span>
+            <i class="fa-solid fa-bell fa-lg"></i>
+          </button>
+          <div x-show="dropdownOpen" class="absolute -right-[200px] md:-right-[240px] mt-[17px] flex h-auto w-[300px] md:w-[375px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-800 dark:bg-gray-dark md:right-0">
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100 dark:border-gray-800">
+              <h5 class="text-lg font-semibold text-gray-800 dark:text-white/90">
+                Notification
+              </h5>
+
+              <button @click="dropdownOpen = false" class="text-gray-500 dark:text-gray-400">
+              <i class="fa-solid fa-xmark fa-md fill-current"></i>
+              </button>
+            </div>
+
+            <ul class="flex flex-col h-auto overflow-y-auto custom-scrollbar">
+              <li>
+                <a class="flex items-center justify-between gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5" href="#">
+                  <span class="relative block z-1">
+                    <i class="fa-solid fa-user overflow-hidden"></i>
+                    <span class="absolute bottom-0 right-0 z-10 h-2.5 w-full max-w-2.5 rounded-full border-[1.5px] border-white bg-error-500 dark:border-gray-900"></span>
+                  </span>
+
+                  <span class="block">
+                    <span class="mb-1.5 block text-sm text-gray-500 dark:text-gray-400">
+                      <span class="font-medium text-gray-800 dark:text-white/90">Brandon Philips</span>
+                      requests permission to change
+                      <span class="font-medium text-gray-800 dark:text-white/90">Project - Nganter App</span>
+                    </span>
+
+                    <span class="flex items-center gap-2 text-gray-500 text-xs dark:text-gray-400">
+                      <span>Project</span>
+                      <span class="w-1 h-1 bg-gray-400 rounded-full"></span>
+                      <span>1 hr ago</span>
+                    </span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+
+            <a href="#" class="mt-3 flex justify-center rounded-lg border border-gray-300 bg-white p-3 text-sm font-medium text-gray-700 shadow-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
+              View All Notification
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
+        <a class="flex items-center text-gray-700 dark:text-gray-400" href="#" @click.prevent="dropdownOpen = ! dropdownOpen">
+          <div class="w-11 h-11 mr-3 flex justify-center items-center border border-gray-200 rounded-full dark:border-gray-800">
+            <p class="text-xl text-gray-500 dark:text-rose-600 font-bold">
+              <%= user.profile %>
+            </p>
+          </div>
+
+          <span class="block mr-1 font-medium text-xs"> <%= user.role %> </span>
+          <i :class="dropdownOpen && 'rotate-180'" class="fa-solid fa-angle-down fa-sm stroke-gray-500 dark:stroke-gray-400"></i>
+        </a>
+
+        <div x-show="dropdownOpen" class="absolute right-0 mt-[27px] flex w-[250px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-800 dark:bg-gray-900">
+          <div class="border-b border-gray-200 dark:border-gray-800">
+            <span class="block font-medium text-gray-700 text-sm dark:text-gray-400">
+              <%= user.username %>
+            </span>
+            <span class="mt-0.5 mb-2 block text-xs text-gray-500 dark:text-gray-400">
+              <%= user.email %>
+            </span>
+          </div>
+
+          <ul class="flex flex-col gap-1 pt-3 pb-3 border-b border-gray-200 dark:border-gray-800">
+            <li>
+              <a href="<%= baseUrl %>/edit-profile" class="flex items-center gap-3 px-3 py-2 font-medium text-gray-700 rounded-lg group text-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300">
+                <i class="fa-solid fa-circle-user fa-xl fill-gray-500 group-hover:fill-gray-700 dark:fill-gray-400 dark:group-hover:fill-gray-300"></i>
+                Details Profile
+              </a>
+            </li>
+            <li>
+              <a href="<%= baseUrl %>/settings" class="flex items-center gap-3 px-3 py-2 font-medium text-gray-700 rounded-lg group text-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300">
+                <i class="fa-solid fa-circle-question fa-xl fill-gray-500 group-hover:fill-gray-700 dark:fill-gray-400 dark:group-hover:fill-gray-300"></i>
+                Support
+              </a>
+            </li>
+          </ul>
+          <button class="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300">
+          <i class="fa-solid fa-right-from-bracket fa-xl fill-gray-500 group-hover:fill-gray-700 dark:group-hover:fill-gray-300"></i>
+            Sign out
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

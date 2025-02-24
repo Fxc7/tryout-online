@@ -1,0 +1,222 @@
+<section>
+   <div x-data="dataTableTwo()" class="overflow-hidden rounded-xl border border-gray-200 bg-white pt-4 dark:border-gray-800 dark:bg-white/[0.03]">
+      <div class="mb-4 flex flex-col gap-2 px-4 sm:flex-row sm:items-center sm:justify-between">
+         <div class="flex items-center gap-3">
+            <span class="text-gray-500 dark:text-gray-400"> Show </span>
+            <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
+               <select class="dark:bg-dark-900 h-9 w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-transparent bg-none py-2 pl-3 pr-8 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-rose-300 focus:outline-none focus:ring focus:ring-rose-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-rose-800" :class="isOptionSelected && 'text-gray-500 dark:text-gray-400'" @click="isOptionSelected = true" @change="perPage = $event.target.value">
+                  <template x-for="index in [10, 8, 5]" :key="index">
+                     <option :value="index" x-text="index" class="text-gray-500 dark:bg-gray-900 dark:text-gray-400"></option>
+                  </template>
+               </select>
+               <span class="absolute right-2 top-1/2 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                  <i class="fa-solid fa-chevron-down fa-xs stroke-current"></i>
+               </span>
+            </div>
+            <span class="text-gray-500 dark:text-gray-400"> entries </span>
+         </div>
+
+         <div class="relative">
+            <button class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+               <i class="fa-solid fa-magnifying-glass fa-md"></i>
+            </button>
+            <input type="text" x-model="search" placeholder="Search..." class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-11 pr-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-rose-300 focus:outline-none focus:ring focus:ring-rose-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-rose-800 md:w-[300px]">
+         </div>
+      </div>
+
+      <div class="max-w-full overflow-x-auto">
+         <div class="min-w-[902px]">
+            <div class="grid grid-cols-12 border-t border-gray-200 dark:border-gray-800">
+               <template x-for="(header, index) in ['Mata Pelajaran', 'Tingkatan', 'Author', 'Jumlah Soal', 'Dibuat']" :key="index">
+                  <div class="flex col-span-2 items-center border-r border-gray-200 px-4 py-2.5 dark:border-gray-800">
+                     <div class="flex w-full cursor-pointer items-center justify-between" @click="sortBy(['subjects', 'level', 'author', 'total_question', 'created_at'][index])">
+                        <p class="text-theme-xs font-medium text-gray-700 dark:text-gray-400" x-text="header"></p>
+                        <span class="flex flex-col">
+                           <i class="fa-solid fa-sort-up fa-xs text-gray-300 dark:text-gray-700"></i>
+                           <i class="fa-solid fa-sort-down fa-xs text-gray-300 dark:text-gray-700"></i>
+                        </span>
+                     </div>
+                  </div>
+               </template>
+               <div class="col-span-2 flex items-center justify-center border-r border-gray-200 px-4 py-3 dark:border-gray-800">
+                  <div class="w-full text-center">
+                     <p class="text-theme-xs font-medium text-gray-700 dark:text-gray-400">
+                        Action
+                     </p>
+                  </div>
+               </div>
+            </div>
+
+            <template x-for="(person, index) in paginatedData" :key="index">
+               <div class="grid grid-cols-12 border-t border-gray-100 dark:border-gray-800">
+                  <template x-for="(value, key) in ['subjects', 'level', 'author', 'total_question', 'created_at']" :key="key">
+                     <div class="col-span-2 flex items-center border-r border-gray-100 px-4 py-2.5 dark:border-gray-800">
+                        <p class="text-theme-xs text-gray-700 dark:text-gray-400" x-text="person[value]"></p>
+                     </div>
+                  </template>
+                  <div class="col-span-2 flex items-center justify-center px-4 py-2.5">
+                     <div class="inline-flex items-center justify-center rounded-lg shadow-sm">
+                        <button @click="deleteModal = true; indexDelete = index" class="px-2 py-1 text-sm font-medium bg-theme-600 rounded-l-lg hover:bg-rose-700">
+                           <i class="fa-solid fa-trash text-gray-700 dark:text-gray-400"></i>
+                        </button>
+                        <button class="px-2 py-1 text-sm font-medium bg-theme-600 rounded-r-lg hover:bg-yellow-400">
+                           <i class="fa-solid fa-pencil text-gray-700 dark:text-gray-400"></i>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+            </template>
+         </div>
+      </div>
+
+      <div class="border-t border-gray-100 py-4 pl-[18px] pr-4 dark:border-gray-800">
+         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div class="flex items-center justify-center gap-0.5 pb-4 md:justify-normal md:pt-0">
+               <button @click="prevPage()" class="mr-2.5 flex items-center justify-center rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-gray-700 shadow-theme-xs hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03]" :disabled="currentPage === 1">
+                  Previous
+               </button>
+               <button @click="goToPage(1)" :class="currentPage === 1 ? 'bg-blue-500/[0.08] text-rose-500' : 'text-gray-700 dark:text-gray-400'" class="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium hover:bg-blue-500/[0.08] hover:text-rose-500 dark:hover:text-rose-500 text-gray-700 dark:text-gray-400">
+                  1
+               </button>
+
+               <template x-if="currentPage > 3">
+                  <span class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-blue-500/[0.08] hover:text-rose-500 dark:hover:text-rose-500">...</span>
+               </template>
+
+               <template x-for="pages in pagesAroundCurrent" :key="pages">
+                  <button @click="goToPage(pages)" :class="currentPage === pages ? 'bg-blue-500/[0.08] text-rose-500' : 'text-gray-700 dark:text-gray-400'" class="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium hover:bg-blue-500/[0.08] hover:text-rose-500 dark:hover:text-rose-500">
+                     <span x-text="pages"></span>
+                  </button>
+               </template>
+
+               <template x-if="currentPage < totalPages - 2">
+                  <span class="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium text-gray-700 hover:bg-blue-500/[0.08] hover:text-rose-500 dark:text-gray-400 dark:hover:text-rose-500">...</span>
+               </template>
+
+               <button @click="nextPage()" class="ml-2.5 flex items-center justify-center rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-gray-700 shadow-theme-xs hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03]" :disabled="currentPage === totalPages" disabled="disabled">
+                  Next
+               </button>
+            </div>
+
+            <p class="border-t border-gray-100 pt-3 text-center text-sm font-medium text-gray-500 dark:border-gray-800 dark:text-gray-400 md:border-t-0 md:pt-0 md:text-left">
+               Showing <span x-text="startEntry"></span> to
+               <span x-text="endEntry"></span> of
+               <span x-text="totalEntries"></span> entries
+            </p>
+         </div>
+      </div>
+   </div>
+   <%- include('../partials/modals.ejs') %>
+</div>
+<script>
+   // 'subjects', 'level', 'author', 'total_question', 'created_at'
+   function dataTableTwo() {
+      return {
+         search: "",
+         sortColumn: "subjects",
+         sortDirection: "asc",
+         currentPage: 1,
+         perPage: 10,
+         data: [
+            {
+               subjects: "Matematika",
+               level: "Mudah",
+               author: "FarhanXCode7",
+               total_question: 33,
+               created_at: new Date().toDateString(),
+            },
+            {
+               subjects: "IPS",
+               level: "Sedang",
+               author: "Fxc7",
+               total_question: 15,
+               created_at: new Date().toDateString(),
+            },
+            {
+               subjects: "IPA",
+               level: "Sulit",
+               author: "Farhan",
+               total_question: 20,
+               created_at: new Date().toDateString(),
+            },
+         ],
+
+         get pagesAroundCurrent() {
+            let pages = [];
+            const startPage = Math.max(2, this.currentPage - 2);
+            const endPage = Math.min(this.totalPages - 1, this.currentPage + 2);
+
+            for (let i = startPage; i <= endPage; i++) {
+               pages.push(i);
+            }
+            return pages;
+         },
+
+         get filteredData() {
+            const searchLower = this.search.toLowerCase();
+            return this.data.filter((person) =>
+               person.subjects.toLowerCase().includes(searchLower) ||
+               person.level.toLowerCase().includes(searchLower) ||
+               person.author.toLowerCase().includes(searchLower) ||
+               person.created_at.toLowerCase().includes(searchLower)
+            )
+            .sort((a, b) => {
+               let modifier = this.sortDirection === "asc" ? 1 : -1;
+               if (a[this.sortColumn] < b[this.sortColumn]) return -1 * modifier;
+               if (a[this.sortColumn] > b[this.sortColumn]) return 1 * modifier;
+               return 0;
+            });
+         },
+
+         get paginatedData() {
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.filteredData.slice(start, end);
+         },
+
+         get totalEntries() {
+            return this.filteredData.length;
+         },
+
+         get startEntry() {
+            return (this.currentPage - 1) * this.perPage + 1;
+         },
+
+         get endEntry() {
+            const end = this.currentPage * this.perPage;
+            return end > this.totalEntries ? this.totalEntries : end;
+         },
+
+         get totalPages() {
+            return Math.ceil(this.filteredData.length / this.perPage);
+         },
+
+         goToPage(pages) {
+            if (pages >= 1 && pages <= this.totalPages) {
+               this.currentPage = pages;
+            }
+         },
+
+         nextPage() {
+            if (this.currentPage < this.totalPages) {
+               this.currentPage++;
+            }
+         },
+
+         prevPage() {
+            if (this.currentPage > 1) {
+               this.currentPage--;
+            }
+         },
+
+         sortBy(column) {
+            if (this.sortColumn === column) {
+               this.sortDirection = this.sortDirection === "asc" ? "desc" : "asc";
+            } else {
+               this.sortDirection = "asc";
+               this.sortColumn = column;
+            }
+         },
+      };
+   }
+</script>

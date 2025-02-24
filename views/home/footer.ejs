@@ -1,0 +1,52 @@
+<footer class="relative bg-gray-950 dark:bg-rose-600 pt-8 pb-6 mt-32">
+   <div class="container mx-auto px-4">
+      <div class="flex flex-wrap text-left lg:text-left">
+         <div class="w-full lg:w-6/12 px-4">
+            <h4 class="text-3xl font-black text-gray-100">
+               <%= meta_website.title %>
+            </h4>
+            <p class="text-sm mt-0 mb-2 pt-5 text-gray-100">
+               <%= meta_website.description %>
+            </p>
+            <div class="mt-6 lg:mb-0 mb-6">
+               <% if (meta_website.sosmed) { %>
+                  <% JSON.parse(meta_website.sosmed).forEach((item) => { %>
+                     <% const [key, value] = Object.entries(item)[0]; %>
+                     <a href="<%= value %>" target="_blank">
+                        <button class="bg-rose-900 shadow-lg w-10 h-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" type="button">
+                           <i class="fa-lg fab fa-<%= key %>"></i>
+                        </button>
+                     </a>
+                  <% }) %>
+               <% } %>
+            </div>
+         </div>
+         <div class="w-full lg:w-6/12 px-4">
+            <div class="flex flex-wrap items-top mb-6">
+               <div class="w-full lg:w-4/12 px-4 ml-auto">
+                  <span class="block uppercase text-lg font-bold mb-2 text-gray-100">Useful Links</span>
+                  <ul class="list-unstyled">
+                     <% if (meta_website.link) { %>
+                        <% const links = JSON.parse(meta_website.link); %>
+                        <% links.forEach((link) => { %>
+                           <% const [key, value] = Object.entries(link)[0]; %>
+                           <li>
+                              <a class="block text-gray-100 pb-2 text-xs md:text-sm hover:opacity-[70%]" href="<%= value %>"><%= key %></a>
+                           </li>
+                        <% }) %>
+                     <% } %>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+      <hr class="my-6 border-gray-300">
+      <div class="flex flex-wrap items-center md:justify-between justify-center">
+         <div class="w-full md:w-4/12 px-4 mx-auto text-center">
+            <div class="text-sm text-gray-100 font-semibold py-1">
+               Copyright © <%= new Date().getFullYear() %> Design by <a class="hover:opacity-[70%] duration-300 transition-all hover:text-rose-400" href="https://github.com/Fxc7">FarhanXCode7</a>
+            </div>
+         </div>
+      </div>
+   </div>
+</footer>

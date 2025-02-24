@@ -1,0 +1,41 @@
+<nav class="fixed w-full top-0 z-10 bg-gray-950 dark:bg-rose-600 p-5 border-b-2 border-gray-950 dark:border-rose-900 md:rounded-b-md flex items-center" x-data="{ open: false }">
+   <div class="container mx-auto flex justify-between items-center">
+      <a href="/" class="relative inline-block before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-gray-100 dark:before:bg-gray-950">
+         <p class="relative font-bold text-lg md:text-2xl dark:text-white text-gray-950"><%= meta_website.title %></p>
+      </a>
+
+      <div class="hidden md:flex space-x-6">
+         <% if (meta_website.link) { %>
+            <% const links = JSON.parse(meta_website.link); %>
+            <% links.forEach(link=> { %>
+               <% const [key, value] = Object.entries(link)[0]; %>
+               <a class="text-sm text-white hover:text-rose-400" href="<%= value %>">
+                  <%= key %>
+               </a>
+            <% }) %>
+         <% } %>
+      </div>
+      <div id="darkModeToggle" class="flex items-center justify-center space-x-4">
+         <button @click="darkMode = !darkMode" class="focus:outline-none">
+            <i class="fa-lg fa-solid" :class="!darkMode ? 'fa-moon text-white' : 'fa-sun text-gray-950'"></i>
+         </button>
+         <button @click="open = !open" class="md:hidden focus:outline-none">
+            <i class="fa-lg text-white dark:text-gray-950 fa-solid" :class="!open ? 'fa-bars-staggered' : 'fa-xmark'"></i>
+         </button>
+      </div>
+   </div>
+   <div class="md:hidden absolute top-16 left-0 w-full bg-gray-950 dark:bg-rose-600 shadow-lg py-4 space-y-4 text-center transition-all duration-300" x-show="open" x-cloak x-transition x-collapse.duration.500ms>
+      <% if (meta_website.link) { %>
+         <% const links = JSON.parse(meta_website.link); %>
+         <% links.forEach(link=> { %>
+            <% const [key, value] = Object.entries(link)[0]; %>
+            <a class="block text-sm text-white" href="<%= value %>">
+               <%= key %>
+            </a>
+         <% }) %>
+      <% } %>
+      <a class="block bg-gray-800 dark:bg-rose-400 text-white px-4 py-2 rounded-md hover:bg-rose-600 mx-auto w-3/4" href="#">
+         Contact us
+      </a>
+   </div>
+</nav>

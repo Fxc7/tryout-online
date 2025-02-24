@@ -1,0 +1,24 @@
+<% if (testimonials) { %>
+   <script type="text/javascript">
+      function testimonialSlider() {
+         const checkString = `<%- testimonials ? testimonials : '' %>`;
+         return {
+            currentIndex: 0,
+            fadeOut: false,
+            testimonials: JSON.parse(checkString),
+            nextTestimonial() {
+               this.fadeOut = true;
+               setTimeout(() => {
+                  this.currentIndex = (this.currentIndex + 1) % this.testimonials.length;
+                  this.fadeOut = false;
+               }, 500);
+            },
+            init() {
+               setInterval(() => {
+                  this.nextTestimonial();
+               }, 5000);
+            }
+         };
+      }
+   </script>
+<% } %>

@@ -1,0 +1,102 @@
+<div class="relative z-1">
+   <div class="relative flex flex-col justify-center w-full h-screen dark:bg-gray-950 p-6 md:p-0 lg:flex-row">
+      <div class="flex flex-col flex-1 w-full lg:w-1/2">
+         <div class="w-full max-w-md pt-10 mx-auto">
+            <a href="/" class="inline-flex gap-2 items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+               <i class="fa-solid fa-arrow-left fa-sm"></i>
+               kembali ke beranda
+            </a>
+         </div>
+         <div class="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+            <div>
+               <div class="mb-5 sm:mb-8">
+                  <h1 class="mb-2 text-3xl font-black text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
+                     Masuk
+                  </h1>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">
+                     Masukkan email dan password untuk melanjutkan!
+                  </p>
+               </div>
+               <div>
+                  <form>
+                     <div class="space-y-5">
+                        <div>
+                           <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                              Email<span class="text-error-500">*</span>
+                           </label>
+                           <input type="email" id="email" name="email" placeholder="example@gmail.com" class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-rose-300 focus:outline-none focus:ring focus:ring-rose-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-rose-800" />
+                        </div>
+                        <div>
+                           <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                              Password<span class="text-error-500">*</span>
+                           </label>
+                           <div x-data="{ showPassword: false }" class="relative">
+                              <input :type="showPassword ? 'text' : 'password'" placeholder="Masukkan password" class="dark:bg-dark-950 h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-4 pr-11 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-rose-300 focus:outline-none focus:ring focus:ring-rose-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-rose-800" />
+                              <span @click="showPassword = !showPassword" class="absolute z-30 text-gray-500 -translate-y-1/2 cursor-pointer right-4 top-1/2 dark:text-gray-400">
+                                 <i x-show="!showPassword" class="fa-solid fa-eye fa-sm"></i>
+                                 <i x-show="showPassword" class="fa-solid fa-eye-slash fa-sm"></i>
+                              </span>
+                           </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                           <div x-data="{ checkboxToggle: false }">
+                              <label for="checkboxLabelOne" class="flex items-center text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400">
+                                 <div class="relative">
+                                    <input type="checkbox" id="checkboxLabelOne" class="sr-only" @change="checkboxToggle = !checkboxToggle" />
+                                    <div :class="checkboxToggle ? 'border-rose-500 bg-rose-500' : 'bg-transparent border-gray-300 dark:border-gray-700'" class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]">
+                                       <span :class="checkboxToggle ? '' : 'opacity-0'">
+                                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                             <path d="M11.6666 3.5L5.24992 9.91667L2.33325 7" stroke="white"
+                                                stroke-width="1.94437" stroke-linecap="round" stroke-linejoin="round" />
+                                          </svg>
+                                       </span>
+                                    </div>
+                                 </div>
+                                 Keep me logged in
+                              </label>
+                           </div>
+                           <a href="/users/forgot-password" class="text-sm text-rose-500 hover:text-rose-600 dark:text-rose-400">
+                              lupa password?
+                           </a>
+                        </div>
+                        <div>
+                           <button class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-rose-500 shadow-theme-xs hover:bg-rose-600">
+                              Submit
+                           </button>
+                        </div>
+                     </div>
+                  </form>
+                  <div class="mt-5">
+                     <p class="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
+                        Tidak punya akun?
+                        <a href="/users/register" class="text-rose-500 hover:text-rose-600 dark:text-rose-400">
+                           Daftar
+                        </a>
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="relative items-center hidden w-full h-full bg-gray-950 dark:bg-gray-900 lg:grid lg:w-1/2">
+         <div class="flex items-center justify-center z-1">
+            <div class="absolute right-0 top-0 -z-1 w-full max-w-[250px] xl:max-w-[450px]">
+               <img src="<%= base_url %>/images/grid-01.svg" alt="grid" />
+            </div>
+            <div class="absolute bottom-0 left-0 -z-1 w-full max-w-[250px] rotate-180 xl:max-w-[450px]">
+               <img src="<%= base_url %>/images/grid-01.svg" alt="grid" />
+            </div>
+            <div class="flex flex-col items-center max-w-xs">
+               <a href="/" class="block text-3xl font-bold text-rose-600 dark:text-white mb-4">
+                  <img class="w-full h-10" src="<%= base_url %>/images/logo/tryout-online.svg" alt="logo" />
+               </a>
+               <p class="text-center text-gray-400 dark:text-white/60">
+                  <%= meta_website.description %>
+               </p>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

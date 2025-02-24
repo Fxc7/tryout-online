@@ -1,0 +1,52 @@
+<div class="overflow-hidden pt-4 rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] duration-300 ease-linear">
+   <div class="mb-4 flex flex-col gap-5 px-6 sm:flex-row sm:items-center sm:justify-between">
+      <h3 class="text-lg text-center md:text-start font-bold text-gray-800 dark:text-white/90 duration-300 ease-linear">List Pengguna</h3>
+      <div class="flex gap-3">
+         <form class="relative">
+            <button class="absolute left-4 top-1/2 -translate-y-1/2">
+               <i class="fa-solid fa-magnifying-glass text-gray-600 dark:text-rose-600 duration-300 ease-linear"></i>
+            </button>
+            <input type="text" placeholder="Search..." class="dark:bg-dark-900 h-10 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-[42px] pr-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-rose-300 focus:outline-none focus:ring focus:ring-rose-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-rose-800 xl:w-[300px]">
+         </form>
+      </div>
+   </div>
+   <div class="max-w-full overflow-x-auto">
+      <table class="w-full">
+         <thead class="bg-gray-100 dark:bg-rose-600/[0.2] text-gray-500 dark:text-gray-400 text-left">
+            <tr>
+               <% const keys = Object.keys(users[0]).filter((item) => !/email|first_name|last_name|bio|country|city|username|password/.test(item)); %>
+               <% const values = Object.keys(users[0]); %>
+               <% keys.forEach((item, index) => { %>
+                  <th class="<%= index === 0 ? 'px-4' : 'px-6 md:px-0' %> py-3 text-theme-xs"><%= item %></th>
+                  <% }) %>
+                  <th class="py-3 px-4 md:px-0 text-theme-xs">Action</th>
+            </tr>
+         </thead>
+         <tbody class="divide-y divide-gray-700/[0.3]">
+            <% users.forEach((item) => { %>
+               <tr class="text-white hover:bg-rose-800/[0.2]">
+                  <td class="px-4 py-4 text-xs text-gray-500"><%= item.id %></td>
+                  <td class="py-4 flex items-center gap-3">
+                     <span class="h-10 w-10 flex items-center justify-center rounded-full bg-blue-600 text-white font-semibold"><%= item.profile %></span>
+                     <div>
+                        <p class="font-medium text-gray-500 text-xs"><%= item.username %></p>
+                        <p class="text-gray-400 text-xs"><%= item.email %></p>
+                     </div>
+                  </td>
+                  <td class="py-4 px-6 md:px-0 text-xs text-gray-500"><%= item.phone %></td>
+                  <td class="py-4 px-6 md:px-0 text-xs text-gray-500"><%= item.role %></td>
+                  <td class="py-4 px-6 md:px-0 text-xs text-gray-500"><%= item.type %></td>
+                  <td class="py-4 px-6 md:px-0 text-xs text-gray-500"><%= new Date(item.createdAt).toDateString() %></td>
+                  <td class="py-4 px-6 md:px-0 text-xs text-gray-500"><%= new Date(item.updatedAt).toDateString() %></td>
+                  <td class="py-4 px-4 md:px-0">
+                     <button type="button" @click="deleteModal = true; indexDelete = <%= item.id %>">
+                        <i class="fa-solid fa-trash text-gray-400 hover:text-red-500 cursor-pointer"></i>
+                     </button>
+                  </td>
+               </tr>
+            <% }) %>
+         </tbody>
+      </table>
+   </div>
+</div>
+<%- include('../partials/modals.ejs') %>

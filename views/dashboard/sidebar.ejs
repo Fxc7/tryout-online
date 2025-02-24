@@ -1,0 +1,48 @@
+<aside x-data="{ 'kelolaSoal': false }" :class="sidebarToggle ? 'translate-x-0 md:w-[90px]' : '-translate-x-full'" class="sidebar fixed left-0 top-0 z-[9999] flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-3 duration-300 ease-linear dark:border-gray-800 dark:bg-gray-950 md:static md:translate-x-0">
+  <div class="sidebar-header flex items-center justify-center mt-5 pb-7">
+    <a href="<%= baseUrl %>">
+      <img class="logo w-full h-6 block" :class="sidebarToggle ? 'md:hidden' : ''" src="<%= base_url %>/images/logo/tryout-online.svg" alt="Logo" />
+      <img class="logo-icon w-full h-10 hidden" :class="sidebarToggle ? 'md:block' : ''" src="<%= base_url %>/images/logo/try.svg" alt="Logo" />
+    </a>
+  </div>
+  <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
+    <nav>
+      <div class="translate transform overflow-hidden">
+        <ul :class="sidebarToggle ? 'md:hidden' : 'flex'" class="menu-dropdown mt-2 flex flex-col gap-1">
+          <li class="border border-gray-200 dark:border-gray-800 rounded-lg">
+            <a href="<%= baseUrl %>" class="menu-item group" :class="page === 'dashboard' ? 'menu-item-active' : 'menu-item-inactive'">
+              <i class="fa-solid fa-house fa-lg"></i>
+              Dashboard
+            </a>
+          </li>
+          <% if (user.role === 'superadmin') { %>
+            <li class="border border-gray-200 dark:border-gray-800 rounded-lg">
+              <a href="<%= baseUrl %>/users" class="menu-item group" :class="page === 'users' ? 'menu-item-active' : 'menu-item-inactive'">
+                <i class="fa-solid fa-user-group fa-lg"></i>
+                User
+              </a>
+            </li>
+            <li>
+              <a href="#" @click.prevent="kelolaSoal = !kelolaSoal" class="menu-item border border-gray-200 dark:border-gray-800 group" :class="kelolaSoal ? 'menu-item-active' : 'menu-item-inactive'">
+                <i class="fa-solid fa-book fa-lg"></i>
+                <span class="menu-item-text">Kelola Soal</span>
+                <i class="fa-solid fa-chevron-down fa-sm menu-item-arrow" :class="kelolaSoal ? 'rotate-180' : ''"></i>
+              </a>
+              <div class="overflow-hidden transform translate block" :class="kelolaSoal ? 'block' :'hidden'">
+                <ul :class="sidebarToggle ? 'md:hidden' : 'flex'" class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
+                  <% ['SD', 'SMP', 'SMK'].forEach((item) => { %>
+                    <li class="border border-gray-200 dark:border-gray-800 rounded-lg">
+                      <a href="<%= baseUrl %>/kelola-soal?type=<%= item %>" class="menu-dropdown-item group" :class="page === '<%= item.toLowerCase() %>' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
+                        <%= item %>
+                      </a>
+                    </li>
+                  <% }) %>
+                </ul>
+              </div>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</aside>

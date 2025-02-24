@@ -1,0 +1,35 @@
+{
+   "compilerOptions": {
+      "paths": {
+         "#models/*": [
+            "database/*"
+         ],
+         "#controllers/*": [
+            "controllers/*"
+         ],
+         "#database/*": [
+            "database/*"
+         ],
+         "#routes/*": [
+            "routes/*"
+         ],
+         "#middlewares/*": [
+            "middlewares/*"
+         ],
+         "#utils/*": [
+            "utils/*"
+         ]
+      },
+      "target": "ES6",
+      "module": "ESNext",
+      "moduleResolution": "bundler",
+      "checkJs": true,
+      "baseUrl": ".",
+   },
+   "include": [
+      "./**/*"
+   ],
+   "exclude": [
+      "node_modules"
+   ]
+}
