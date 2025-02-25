@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smoth" x-data="{ darkMode: localStorage.getItem('dark') === 'true' }" x-init="$watch('darkMode', (val) => localStorage.setItem('dark', val))" x-bind:class="{ 'dark': darkMode }">
+
+   <head>
+      <%- include('../partials/seo.ejs', { title_website: title_website || '404 page not found' }) %>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+      <link rel="stylesheet" href="<%= base_url %>/css/style.css">
+      <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script>
+         tailwind.config = {
+            darkMode: 'class',
+            theme: {}
+         }
+      </script>
+   </head>
+
+   <body x-data="{ 'loaded': true, 'darkMode': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode')); $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{'dark bg-gray-900': darkMode === true}">
+      <%- include('../partials/loader.ejs') %>
+      <main class="bg-gray-100 dark:bg-gray-950 relative z-1 flex min-h-screen flex-col items-center justify-center overflow-hidden p-6">
+         <%- body %>
+      </main>
+   </body>
+</html>

@@ -2,13 +2,8 @@
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-   <script src="https://cdn.tailwindcss.com"></script>
-   <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
-   <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
-   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+   <%- include('../partials/seo.ejs', { title_website: title_website || meta_website.title }) %>
+   <%- include('../partials/script.ejs') %>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
    <link rel="stylesheet" href="<%= base_url %>/css/style.css" />
    <script type="text/javascript" nonce="<%= nonce %>">
@@ -17,46 +12,18 @@
          theme: {}
       }
    </script>
-   <title>
-      <%= meta_website.title %>
-   </title>
 </head>
 
 <body x-data="{ 'page': '<%= page %>', 'loaded': true, 'darkMode': false, 'stickyMenu': true, 'sidebarToggle': false, 'scrollTop': true, 'profileShowModal': false, deleteModal: false, action: '', 'objectData': {}, 'inputs': [] }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode')); $watch('darkMode', (value) => localStorage.setItem('darkMode', JSON.stringify(value)))" :class="{'dark bg-gray-950': darkMode === true }">
    <%- include('../partials/loader.ejs') %>
-   <div class="flex h-screen overflow-hidden">
+   <main class="flex h-screen overflow-hidden">
       <%- include('../dashboard/sidebar.ejs') %>
       <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
          <div :class="sidebarToggle ? 'block lg:hidden' : 'hidden'" class="fixed w-full h-screen z-9 backdrop-blur-sm"></div>
          <%- include('../dashboard/header.ejs') %>
          <%- body %>
       </div>
-   </div>
-   <script type="module">
-      import sweetalert2 from 'https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/+esm';
-      const checkString = `<%- flashMessage ? JSON.stringify(flashMessage) : '' %>`;
-      if (checkString.length > 10) {
-         const flash = JSON.parse(checkString);
-         if (flash.type || flash.message) {
-            const ToastSucces = sweetalert2.mixin({
-               toast: true,
-               position: flash.options.position,
-               showConfirmButton: false,
-               timer: flash.options.timer,
-               timerProgressBar: true,
-               didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', sweetalert2.stopTimer);
-                  toast.addEventListener('mouseleave', sweetalert2.resumeTimer);
-               }
-            });
-            ToastSucces.fire({
-               icon: flash.type === 'error' ? 'error' : flash.type === 'warning' ? 'warning' : 'success',
-               title: flash.message,
-               footer: '<%= meta_website.title %>'
-            });
-         }
-      }
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/fontawesome.min.js"></script>
+   </main>
+   <%- include('../partials/flash.ejs') %>
 </body>
 </html>

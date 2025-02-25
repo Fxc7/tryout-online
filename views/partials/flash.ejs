@@ -1,0 +1,25 @@
+<script type="module">
+   import sweetalert2 from 'https://cdn.jsdelivr.net/npm/sweetalert2@11.17.2/+esm';
+   const checkString = `<%- flashMessage ? JSON.stringify(flashMessage) : '' %>`;
+   if (checkString.length > 10) {
+      const flash = JSON.parse(checkString);
+      if (flash.type || flash.message) {
+         const ToastSucces = sweetalert2.mixin({
+            toast: true,
+            position: flash.options.position,
+            showConfirmButton: false,
+            timer: flash.options.timer,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.addEventListener('mouseenter', sweetalert2.stopTimer);
+               toast.addEventListener('mouseleave', sweetalert2.resumeTimer);
+            }
+         });
+         ToastSucces.fire({
+            icon: flash.type === 'error' ? 'error' : flash.type === 'warning' ? 'warning' : 'success',
+            title: flash.message,
+            footer: '<%= meta_website.title %>'
+         });
+      }
+   }
+</script>

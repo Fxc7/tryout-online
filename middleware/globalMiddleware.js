@@ -83,6 +83,7 @@ globalMiddleware.use(async (req, res, next) => {
       }
    }
    res.locals.csrfToken = req.csrfToken();
+   res.locals.title_website = null;
    res.locals.base_url = `${req.protocol}://${req.headers.host}`;
    res.locals.page = null;
    res.locals.meta_website = cachedWebsite;

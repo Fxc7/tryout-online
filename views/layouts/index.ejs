@@ -1,40 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smoth" x-data="{ darkMode: localStorage.getItem('dark') === 'true'} " x-init="$watch('darkMode', (val) => localStorage.setItem('dark', val))" x-bind:class="{ 'dark': darkMode }">
+<html lang="en" class="scroll-smoth" x-data="{ darkMode: localStorage.getItem('dark') === 'true' } " x-init="$watch('darkMode', (val) => localStorage.setItem('dark', val))" x-bind:class="{ 'dark': darkMode }">
 
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta name="robots" content="index, follow">
-   <meta name="language" content="English">
-   <meta name="title" content="coders tools">
-   <meta name="description" content="">
-   <meta name="keywords" content="">
-   <link rel="apple-touch-icon" sizes="180x180" href="<%= base_url %>/favicon/apple-touch-icon.png">
-   <link rel="icon" type="image/png" sizes="32x32" href="<%= base_url %>/favicon/favicon-32x32.png">
-   <link rel="icon" type="image/png" sizes="16x16" href="<%= base_url %>/favicon/favicon-16x16.png">
-   <link rel="manifest" href="<%= base_url %>/favicon/site.webmanifest">
-   <title>
-      <%= meta_website.title %>
-   </title>
-   <script src="https://cdn.tailwindcss.com"></script>
-   <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
-   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-   <link rel="stylesheet" href="<%= base_url %>/css/style.css">
-   <script>
-      tailwind.config = {
-         darkMode: 'class',
-         theme: {}
-      }
-   </script>
-</head>
+   <head>
+      <%- include('../partials/seo.ejs', { title_website: title_website || meta_website.title }) %>
+      <%- include('../partials/script.ejs') %>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+      <link rel="stylesheet" href="<%= base_url %>/css/style.css">
+      <script>
+         tailwind.config = {
+            darkMode: 'class',
+            theme: {}
+         }
+      </script>
+   </head>
 
-<body x-data="{ loaded: true }" class="transition-all bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-white duration-300">
-   <%- include('../partials/loader.ejs') %>
-   <div class="container mx-auto min-h-screen max-h-screen">
-      <%- body %>
-   </div>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/fontawesome.min.js"></script>
-</body>
+   <body x-data="{ loaded: true }" class="transition-all bg-gray-100 text-gray-900 dark:bg-gray-950 dark:text-white duration-300">
+      <%- include('../partials/loader.ejs') %>
+      <main class="container mx-auto min-h-screen max-h-screen">
+         <%- body %>
+      </main>
+   </body>
 </html>

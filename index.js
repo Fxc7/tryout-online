@@ -10,7 +10,9 @@ const port = process.env.PORT || 3000;
 router.use(IndexRoute);
 
 router.use((req, res) => {
-   return res.sendFile(path.join(process.cwd(), 'views', '404.html'));
+   return res.render('404', {
+      layout: 'layouts/error'
+   });
 });
 
 sequelize.authenticate()
